@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Travel Safety Alert App Backend
 
 ## Overview
