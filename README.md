@@ -1,161 +1,221 @@
-Travel Safety Alert App Backend
-Overview
-The Travel Safety Alert App Backend powers a mobile application that enables users to report location-based incidents (e.g., accidents, roadblocks), receive real-time alerts, manage travel groups, and trigger emergency SOS signals. Built with Node.js, Express, PostgreSQL (with PostGIS), Prisma, JWT, Socket.io (for real-time alerts), and AWS S3 (for media storage), it serves APIs and real-time events to a React Native frontend. This README provides setup and collaboration instructions for the development team.
-Project Structure
+🚨 Travel Safety Alert App Backend
+📌 Overview
+The Travel Safety Alert App Backend powers a mobile app for reporting incidents (e.g., accidents, roadblocks), receiving real-time alerts, managing travel groups, and triggering emergency SOS signals.
 
-/docs: Contains project documentation (backend-guide.md, api-routes-note.md).
-/prisma: Prisma schema (schema.prisma) for database models.
-/src: Source code, including routes (auth.js, incidents.js, sos.js) and utilities (s3.js).
-package.json: Node.js dependencies and scripts.
-.env: Environment variables (e.g., database URL, JWT secret).
+Built with:
 
-Tech Stack
+Node.js, Express, PostgreSQL + PostGIS
 
-Node.js & Express: REST API server.
-PostgreSQL with PostGIS: Relational database with geospatial query support.
-Prisma: ORM for database interactions and migrations.
-JWT: Stateless authentication.
-Socket.io: Real-time alerts and group chats (optional).
-AWS S3: Media storage for incident photos/videos.
+Prisma, JWT, Socket.io
 
-Prerequisites
+AWS S3 for media storage
 
-Node.js (v16 or higher): Download.
-PostgreSQL (v14 or higher): Download or use a cloud provider (e.g., Supabase, AWS RDS).
-PostGIS: Geospatial extension for PostgreSQL.
-AWS Account: For S3 media storage.
-Git: For version control.
-VS Code: Recommended for editing code and markdown files.
+This backend serves APIs and real-time events to a React Native frontend.
 
-Setup Instructions
+🗂️ Project Structure
+bash
+Copy
+Edit
+/docs       → Documentation (backend-guide.md, api-routes-note.md)
+/prisma     → Prisma schema (schema.prisma)
+/src        → Source code (routes, utilities)
+/.env       → Environment variables
+package.json → Project dependencies & scripts
+🧰 Tech Stack
+Node.js + Express – RESTful API server
 
-Clone the Repository:
+PostgreSQL + PostGIS – Database with geospatial support
+
+Prisma – ORM for managing DB models and migrations
+
+JWT – Stateless authentication
+
+Socket.io – Real-time alerts & chat (optional)
+
+AWS S3 – Media storage
+
+✅ Prerequisites
+Node.js (v16+)
+
+PostgreSQL (v14+) + PostGIS extension
+
+AWS Account for S3
+
+Git
+
+VS Code (Recommended)
+
+🚀 Setup Instructions
+1. Clone the Repository
+bash
+Copy
+Edit
 git clone https://github.com/<your-username>/travel-safety-backend.git
 cd travel-safety-backend
-
-
-Install Dependencies:
+2. Install Dependencies
+bash
+Copy
+Edit
 npm install
+Includes: express, @prisma/client, jsonwebtoken, socket.io, aws-sdk, express-validator, bcrypt
 
-Key dependencies: express, @prisma/client, jsonwebtoken, socket.io, aws-sdk, express-validator, bcrypt.
+3. Set Up PostgreSQL + PostGIS
+Install or connect to a PostgreSQL instance
 
-Set Up PostgreSQL and PostGIS:
+Enable PostGIS:
 
-Install PostgreSQL locally or use a cloud provider.
-Enable PostGIS extension:CREATE EXTENSION postgis;
+sql
+Copy
+Edit
+CREATE EXTENSION postgis;
+Create the database:
 
+bash
+Copy
+Edit
+createdb travel_safety_db
+4. Configure Environment Variables
+bash
+Copy
+Edit
+cp .env.example .env
+Edit .env:
 
-Create a database (e.g., travel_safety_db).
-
-
-Configure Environment Variables:
-
-Copy .env.example to .env:cp .env.example .env
-
-
-Update .env with your credentials:DATABASE_URL="postgresql://user:password@localhost:5432/travel_safety_db?schema=public"
+env
+Copy
+Edit
+DATABASE_URL="postgresql://user:password@localhost:5432/travel_safety_db?schema=public"
 JWT_SECRET="your-secret-key"
 AWS_ACCESS_KEY_ID="your-aws-key"
 AWS_SECRET_ACCESS_KEY="your-aws-secret"
 AWS_S3_BUCKET="your-bucket-name"
+5. Prisma Setup
+bash
+Copy
+Edit
+npx prisma migrate dev
+npx prisma generate
+6. Start the Server
+bash
+Copy
+Edit
+npm start         # for production
+npm run dev       # for development with nodemon
+Server runs at: http://localhost:3000
 
+🔌 Testing the API
+Use Postman or Thunder Client (VS Code).
 
+Example:
 
+http
+Copy
+Edit
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
 
-Set Up Prisma:
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+More routes in: /docs/api-routes-note.md
 
-Apply database migrations:npx prisma migrate dev
+📚 Project Documentation
+Backend Guide: /docs/backend-guide.md
+Includes features, DB schema, and design flow
 
+API Reference: /docs/api-routes-note.md
+All endpoints and usage examples
 
-Generate Prisma client:npx prisma generate
+Database Models: /prisma/schema.prisma
 
+👥 Collaboration
+👨‍💻 Team: 2 Developers
+Developer	Responsibilities
+Dev 1	User Management, SOS, Prisma Setup
+Dev 2	Incident Reports, Location Features, Socket.io
 
+🔁 Git Workflow
+bash
+Copy
+Edit
+# Create a new branch
+git checkout -b feature/your-feature
 
+# Commit your changes
+git commit -m "Add: your feature"
 
-Run the Application:
+# Push to GitHub
+git push origin feature/your-feature
+Create a Pull Request
 
-Start the server:npm start
+Review & merge into main
 
-or use nodemon for development:npm run dev
+💬 Communication
+Use Slack or WhatsApp for updates
 
+Schedule weekly check-ins
 
-The server runs on http://localhost:3000.
+📋 Task Tracking
+Use GitHub Issues or Trello
+(e.g., “Implement /api/sos”, “Set up PostGIS queries”)
 
+🔄 Development Workflow
+Pull latest code: git pull origin main
 
-Test APIs:
+Work on your assigned feature
 
-Use Postman or Thunder Client (VS Code extension) to test endpoints (see /docs/api-routes-note.md).
-Example: POST http://localhost:3000/api/auth/register with { "email": "test@example.com", "password": "password123" }.
+Test locally (Postman, npm test)
 
+Commit & push to your branch
 
+Open a PR and request review
 
-Project Documentation
+Merge after approval
 
-Backend Guide: /docs/backend-guide.md details features, database schema, and implementation steps. View in VS Code (press Ctrl+Shift+V for preview) or on GitHub.
-API Routes: /docs/api-routes-note.md lists all endpoints (e.g., /api/auth/register, /api/incidents). Test these routes to verify functionality.
-Prisma Schema: /prisma/schema.prisma defines database models (e.g., User, Incident).
+🧪 Testing
+Unit Tests – using Jest
 
-Collaboration
+Integration Tests – using Supertest
 
-Team: 2 developers.
-Task Division:
-Developer 1: User Management, Emergency SOS, Prisma setup.
-Developer 2: Incident Reporting, Location Services, Socket.io (real-time alerts).
+Manual Tests – Socket.io alerts & PostGIS queries
 
+🚢 Deployment
+Deploy to:
 
-Git Workflow:
-Work on feature branches (e.g., git checkout -b feature/auth).
-Commit changes: git commit -m "Add user login endpoint".
-Push to GitHub: git push origin feature/auth.
-Create pull requests (PRs) for code review and merging into main.
+Heroku, Render, or AWS Elastic Beanstalk
 
+Requirements:
 
-Communication:
-Use Slack/WhatsApp for quick updates.
-Schedule weekly check-ins to discuss progress and blockers.
+Set up environment variables on the platform
 
+Use HTTPS for all API calls
 
-Task Tracking:
-Use GitHub Issues or Trello to assign tasks (e.g., “Implement /api/sos”, “Set up PostGIS queries”).
+Ensure PostgreSQL + PostGIS support (e.g., via AWS RDS)
 
+🤝 Contributing
+Follow coding style in existing files
 
+Comment complex logic (e.g., PostGIS usage)
 
-Development Workflow
+Update /docs/backend-guide.md with your changes
 
-Pull latest changes: git pull origin main.
-Work on assigned features (e.g., auth or incidents).
-Test locally with Postman or unit tests (npm test).
-Commit and push to your branch.
-Open a PR and review each other’s code.
-Merge into main after approval.
+Test your code before opening a PR
 
-Testing
+📘 Resources
+📚 Prisma Docs
 
-Unit Tests: Use Jest for controllers and services (e.g., authController.test.js).
-Integration Tests: Use Supertest to test API endpoints.
-Manual Testing: Test real-time alerts with Socket.io and geospatial queries with sample data.
+📍 PostGIS Docs
 
-Deployment
+💬 Socket.io Docs
 
-Deploy to a platform like Heroku, AWS Elastic Beanstalk, or Render.
-Set up environment variables in the deployment platform.
-Ensure PostgreSQL/PostGIS is accessible (e.g., via AWS RDS).
-Use HTTPS for secure API calls.
+🗃️ AWS S3 Docs
 
-Contributing
+📦 Express Docs
 
-Follow the coding style in existing files (e.g., src/routes/incidents.js).
-Add comments for complex logic (e.g., PostGIS queries).
-Update /docs/backend-guide.md with new implementation details.
-Test all changes before creating a PR.
+📞 Contact
+For questions or help:
 
-Resources
+Open a GitHub Issue
 
-Prisma Docs
-PostGIS Docs
-Socket.io Docs
-AWS S3 Docs
-Express Docs
-
-Contact
-For questions, create a GitHub Issue or message the team on Slack/WhatsApp.
+Or message the team via Slack/WhatsApp
