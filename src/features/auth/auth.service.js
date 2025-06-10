@@ -12,8 +12,7 @@ export default {
             const user = await prisma.user.create({ data });
             return user;
         } catch (err) {
-            console.error('Error creating user:', err);
-            throw new Error('Failed to create user', err);
+            throw err;
         }
     },
 }

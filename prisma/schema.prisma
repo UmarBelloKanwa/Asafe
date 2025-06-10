@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  fullName    String // max 100 chars
+  email       String   @unique
+  phone       String   @unique // max 20 chars
+  password    String
+  dateOfBirth DateTime
+  country     String // You can adjust length
+  createdAt   DateTime @default(now())
+}

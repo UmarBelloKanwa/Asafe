@@ -23,7 +23,14 @@ export function signup(req, res) {
             });
         })
         .catch(err => {
-            // Handle any errors from the service layer
+            // Prisma unique constraint error (duplicate email)
+            if (err.code === 'P2002' && err.meta && err.meta.target && err.meta.target.includes('email')) {
+                return res.status(409).json({
+                    success: false,
+                    message: 'Email already exists',
+                });
+            }
+            // Handle any other errors from the service layer
             res.status(500).json({
                 success: false,
                 message: 'Internal server error',

@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "npm run prismix && nodemon src/server.js",
-    "prismix": "npx prismix && prisma format"
+    "dev": "nodemon src/server.js"
   },
   "dependencies": {
     "@prisma/client": "^6.9.0",
@@ -16,7 +15,8 @@
     "express": "^4.21.2",
     "http-errors": "~1.6.3",
     "joi": "^17.13.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "prisma": "^6.9.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
